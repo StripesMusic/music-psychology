@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Psychology Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+      /* Variables */
+      :root {
+        --primary: #5bc0be;
+        --accent: #1c2541;
+        --deep-blue: #0b132b;
+        --blue-gray: #3a506b;
+        --bg: #ffffff;
+        --card-bg: #f3f6fa;
+        --radius: 16px;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg)
+          url("https://app.haikei.app/api/topography?fill=%23f3f6fa&opacity=0.3")
+          no-repeat center/cover;
+        color: var(--deep-blue);
+        overflow-x: hidden;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.03);
+        }
+      }
+
+      /* Header */
+      header {
+        position: relative;
+        background: linear-gradient(145deg, var(--accent), var(--blue-gray));
+        color: #fff;
+        text-align: center;
+        animation: fadeInUp 1s ease-out;
+      }
+      header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 120px;
+        background: url("https://app.haikei.app/api/wave?fill=%23ffffff&height=120&width=1200&curve=6")
+          no-repeat bottom/cover;
+      }
+      header h1 {
+        font-family: "Nata Sans", sans-serif;
+        font-size: 4rem;
+        letter-spacing: -1px;
+      }
+      header p {
+        margin-top: 4rem;
+        font-size: 1.2rem;
+      }
+
+      .hero-header {
+        position: relative;
+        text-align: center;
+        color: white;
+        padding: 6rem 1rem 4rem;
+        overflow: hidden;
+      }
+
+      .hero-blob {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        z-index: 0;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        animation: fadeInUp 1s ease-out;
+      }
+
+      /* Layout */
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        text-align: center;
+      }
+      .section {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 3rem;
+        margin: 3rem 0;
+        animation: fadeInUp 0.8s ease;
+      }
+
+      /* Pre-screening */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(620px, 1fr));
+        padding: 1.5rem;
+        gap: 1.5rem;
+        justify-content: center;
+      }
+      .card {
+        background: #fff;
+        border-radius: var(--radius);
+        padding: 1.75rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+        text-align: left;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .card label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+      .card input,
+      .card select,
+      .card textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: border-color 0.2s;
+      }
+      .card input:focus,
+      .card select:focus,
+      .card textarea:focus {
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(91, 192, 190, 0.2);
+      }
+
+      /* Listen & Respond */
+      .responses {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        padding: 1.5rem;
+        gap: 2rem;
+        justify-content: center;
+      }
+      .genre {
+        border-radius: var(--radius);
+        overflow: hidden;
+        color: #434343;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+        animation: fadeInUp 0.8s ease;
+        text-align: left;
+      }
+      .genre h3 {
+        margin: 0 0 1rem;
+      }
+      .genre .subtext {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+      }
+      .genre audio {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+      }
+      .genre label {
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      /* slider wrapper */
+      .slider-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .slider-wrapper input[type="range"] {
+        flex: 1;
+      }
+
+      .rock-card {
+        background: transparent;
+        padding: 3px;
+        border-radius: 16px;
+        background-image: linear-gradient(135deg, #d32f2f, #b71c1c);
+        position: relative;
+      }
+      .rock-card-inner {
+        background-color: #fff;
+        border-radius: 14px;
+        padding: 24px;
+      }
+      .edm-card {
+        background: transparent;
+        padding: 3px;
+        border-radius: 16px;
+        background-image: linear-gradient(135deg, #2fb5d3, #1c5db7);
+        position: relative;
+      }
+      .edm-card-inner {
+        background-color: #fff;
+        border-radius: 14px;
+        padding: 24px;
+      }
+      .jazz-card {
+        background: transparent;
+        padding: 3px;
+        border-radius: 16px;
+        background-image: linear-gradient(135deg, #e1c01d, #e09616);
+        position: relative;
+      }
+      .jazz-card-inner {
+        background-color: #fff;
+        border-radius: 14px;
+        padding: 24px;
+      }
+      .hiphop-card {
+        background: transparent;
+        padding: 3px;
+        border-radius: 16px;
+        background-image: linear-gradient(135deg, #3ee11d, #11670e);
+        position: relative;
+      }
+      .hiphop-card-inner {
+        background-color: #fff;
+        border-radius: 14px;
+        padding: 24px;
+      }
+
+      .submit-heading {
+        margin-bottom: 10px;
+      }
+      .submit-btn {
+        display: inline-block;
+        margin-top: 1.5rem;
+        background: var(--primary);
+        color: #fff;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        animation: pulse 3s infinite ease-in-out;
+      }
+      .submit-btn:hover {
+        background: #47a3a1;
+      }
+      .condensed {
+        font-size: 10pt;
+        font-weight: 400;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero-header">
+      <svg
+        class="hero-blob"
+        viewBox="0 0 1440 320"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill="#1c2541"
+          fill-opacity="1"
+          d="M0,160L40,170.7C80,181,160,203,240,186.7C320,171,400,117,480,90.7C560,64,640,64,720,90.7C800,117,880,171,960,181.3C1040,192,1120,160,1200,154.7C1280,149,1360,171,1400,181.3L1440,192L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0"
+        />
+      </svg>
+      <div class="hero-content">
+        <h1>Music & Psychology Research</h1>
+        <p>Exploring how genre exposure affects listener perception</p>
+      </div>
+    </header>
+    <div class="container">
+        <section class="section">
+            <h2>Pre-screening</h2>
+            <div class="cards">
+            <div class="card">
+                <label for="over20">1. Are you over the age of 16?</label>
+                <select id="over20">
+                <option value="">Select</option>
+                <option>Yes</option>
+                <option>No</option>
+                </select>
+            </div>
+            <div class="card">
+                <label for="primaryGenre">2. Of these genres:<br><br>
+                Rock, EDM, Hip Hop, Jazz, None<br><br>
+                Which one have you listened to for over 80% of your music-listening time in the past two weeks?<br><br>
+                <span class="condensed">If none, select none (only applicable if you did not listen to any other genre not found here).</span>
+                </label>
+                <select id="primaryGenre">
+                <option value="">Select a genre</option>
+                <option>Rock</option>
+                <option>EDM</option>
+                <option>Hip Hop</option>
+                <option>Jazz</option>
+                <option>None</option>
+                </select>
+            </div>
+
+            <div class="card">
+                <label for="hoursPerWeek">3. Have you listened to your chosen genre for more than 3 hours/week?</label>
+                <select id="hoursPerWeek">
+                <option value="">Select</option>
+                <option>Yes</option>
+                <option>No</option>
+                </select>
+            </div>
+
+            <div class="card">
+            <label for="neutralMood">
+                4. Is your mood neutral at the moment?
+            </label>
+            <select id="neutralMood" name="neutralMood">
+                <option value="">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Listen & Respond</h2>
+        <div class="responses">
+          <!-- Rock -->
+           <div class="rock-card">
+            <div class="rock-card-inner genre">
+              <h3>🎸 Rock</h3>
+              <p class="subtext">120 BPM • Key of G</p>
+              <audio
+                src="assets/audio/rock_clip.mp3"
+                controls
+                preload="auto"
+                class="locked"
+              ></audio>
+              <label for="rock-mood">
+                What is your mood level now that you have listened to this audio
+                clip? (1 being neutral, 5 being extremely happy)
+              </label>
+              <div class="slider-wrapper">
+                <input
+                  type="range"
+                  id="rock-mood"
+                  name="rock-mood"
+                  min="1"
+                  max="5"
+                  value="1"
+                  disabled
+                />
+                <output id="rockMoodOutput">1</output>
+              </div>
+            </div>
+          </div>
+
+        <!-- EDM (locked until rock answered) -->
+          <div class="edm-card">
+            <div class="edm-card-inner genre">
+              <h3>🎧 EDM</h3>
+              <p class="subtext">120 BPM • Key of G</p>
+              <audio
+                src="assets/audio/edm_clip.mp3"
+                controls
+                preload="auto"
+                class="locked"
+              ></audio>
+              <label for="edm-mood">
+                What is your mood level now that you have listened to this audio
+                clip? (1 being neutral, 5 being extremely happy)
+              </label>
+              <div class="slider-wrapper">
+                <input
+                  type="range"
+                  id="edm-mood"
+                  name="edm-mood"
+                  min="1"
+                  max="5"
+                  value="1"
+                  disabled
+                />
+                <output id="edmMoodOutput">1</output>
+              </div>
+            </div>
+          </div>
+
+          <div class="jazz-card">
+            <div class="jazz-card-inner genre">
+              <h3>🎷 Jazz</h3>
+              <p class="subtext">120 BPM • Key of G</p>
+              <audio
+                src="assets/audio/jazz_clip.mp3"
+                controls
+                preload="auto"
+                class="locked"
+              ></audio>
+              <label for="jazz-mood">
+                What is your mood level now that you have listened to this audio
+                clip? (1 being neutral, 5 being extremely happy)
+              </label>
+              <div class="slider-wrapper">
+                <input
+                  type="range"
+                  id="jazz-mood"
+                  name="jazz-mood"
+                  min="1"
+                  max="5"
+                  value="1"
+                  disabled
+                />
+                <output id="jazzMoodOutput">1</output>
+              </div>
+            </div>
+          </div>
+
+          <!-- HIP-HOP (locked until Jazz answered) -->
+          <div class="hiphop-card">
+            <div class="hiphop-card-inner genre">
+              <h3>🎤 Hip-Hop</h3>
+              <p class="subtext">120 BPM • Key of G</p>
+              <audio
+                src="assets/audio/hiphop_clip.mp3"
+                controls
+                preload="auto"
+                class="locked"
+              ></audio>
+              <label for="hiphop-mood">
+                What is your mood level now that you have listened to this audio
+                clip? (1 being neutral, 5 being extremely happy)
+              </label>
+              <div class="slider-wrapper">
+                <input
+                  type="range"
+                  id="hiphop-mood"
+                  name="hiphop-mood"
+                  min="1"
+                  max="5"
+                  value="1"
+                  disabled
+                />
+                <output id="hiphopMoodOutput">1</output>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="submit-heading">Submit</h2>
+        <p class="submit-subtext">
+          Thanks for your time! Click below when you’re ready to submit your
+          answers.
+        </p>
+        <button
+          class="submit-btn"
+          onclick="alert('Thank you! Responses recorded.')"
+        >
+          Submit
+        </button>
+      </section>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const genres = Array.from(document.querySelectorAll(".responses .genre"));
+
+        genres.forEach((genreDiv, idx) => {
+          const audio = genreDiv.querySelector("audio");
+          const slider = genreDiv.querySelector('input[type="range"]');
+          const output = genreDiv.querySelector("output");
+
+          // update output on input
+          slider.addEventListener("input", () => {
+            output.textContent = slider.value;
+          });
+
+          // once audio ends, enable this slider
+          audio.addEventListener("ended", () => {
+            slider.disabled = false;
+          });
+
+          // once slider is moved, unlock next audio
+          slider.addEventListener("change", () => {
+            if (idx + 1 < genres.length) {
+              const nextAudio = genres[idx + 1].querySelector("audio");
+              nextAudio.classList.remove("locked");
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
