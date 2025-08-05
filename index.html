@@ -300,6 +300,17 @@
       </div>
     </header>
     <div class="container">
+      <form
+        action="https://staticman-sand.vercel.app/v3/entry/StripesMusic/music-psychology/main"
+        method="POST"
+      >
+        <!-- This hidden input tells Staticman how to name the file -->
+        <input
+          type="hidden"
+          name="options[slug]"
+          value="submission-{{timestamp}}"
+        />
+        
         <section class="section">
             <h2>Pre-screening</h2>
             <div class="cards">
@@ -469,19 +480,16 @@
       </section>
 
       <section class="section">
-        <h2 class="submit-heading">Submit</h2>
-        <p class="submit-subtext">
-          Thanks for your time! Click below when you’re ready to submit your
-          answers.
-        </p>
-        <button
-          class="submit-btn"
-          onclick="alert('Thank you! Responses recorded.')"
-        >
-          Submit
-        </button>
-      </section>
-    </div>
+            <h2 class="submit-heading">Submit</h2>
+            <p class="submit-subtext">Thanks for your time! Click below to send.</p>
+          <button class="submit-btn" onclick="alert('Thank you! Responses recorded.')">
+            Submit
+          </button>
+          <button class="submit-btn" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -514,5 +522,6 @@
     </script>
   </body>
 </html>
+
 
 
