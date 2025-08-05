@@ -1,0 +1,4 @@
+branch: main
+pullRequest: true
+path: "_data/submissions"
+commitMessage: "New music-psychology submission"
